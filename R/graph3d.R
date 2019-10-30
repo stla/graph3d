@@ -13,6 +13,8 @@ dropNulls <- function(x){
 #' dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 #' graph3d(dat, style = "bar", zMin = 0)
 graph3d <- function(data, width = "100%", height = "100%", style = "surface",
+                    showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
+                    keepAspectRatio = TRUE, verticalRatio = 0.5,
                     tooltip = TRUE, showLegend = TRUE,
                     cameraPosition = list(horizontal = 1, vertical = 0.5, distance = 2.8),
                     xMin = NULL, xMax = NULL, yMin = NULL, yMax = NULL, zMin = NULL, zMax = NULL,
@@ -21,7 +23,14 @@ graph3d <- function(data, width = "100%", height = "100%", style = "surface",
   # forward options using x
   x = list(
     data = data,
-    options = dropNulls(list(
+    options1 = list(
+      showPerspective = showPerspective,
+      showGrid = showGrid,
+      showShadow = showShadow,
+      keepAspectRatio = keepAspectRatio,
+      verticalRatio = verticalRatio
+    ),
+    options2 = dropNulls(list(
       width = width,
       height = height,
       style = style,
