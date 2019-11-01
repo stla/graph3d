@@ -16,6 +16,9 @@ graph3d(data = NULL, x = ~x, y = ~y, z = ~z, xlab = NULL,
 \description{
 <Add Description>
 }
+\details{
+See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
+}
 \examples{
 dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 graph3d(dat, style = "bar", zMin = 0)

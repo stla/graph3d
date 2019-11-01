@@ -1,0 +1,104 @@
+---
+title: "A comparison of drm and nlsLM"
+author: "Stéphane Laurent"
+date: "01/11/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Let's simulate a sample from the 5pl regression model:
+
+```{r data}
+A <- 30; D <- 100; B <- 5; xmid <- 55; S <- 25
+C <- xmid + log(2^(1/S) - 1)/B 
+curve(A + (D-A) / (1 + exp(B*(C-x)))^S, 
+      from = 48, to = 62, n = 300, col = "red")
+# simulated data
+n <- 25
+x <- seq(48, 62, length.out = n)
+set.seed(3141)
+y <- A + (D-A) / (1 + exp(B*(C-x)))^S + rnorm(n, 0, 6)
+points(x, y)
+```
+
+Now we fit the model with `drc::drm` and `minpack.lm::nlsLM`, assuming the 
+parameters $A$, $C$ and $D$ are known.
+
+```{r fit, message=FALSE}
+library(drc)
+fit_drc <- drm(y ~ x, data = data.frame(x=x, y=y),
+           fct = L.5(fixed = c(NA, A, D, C, NA),
+                     names = c("minusB", "A", "D", "C", "S")))
+#
+library(minpack.lm)
+fit_minpack <- nlsLM(
+  y ~ A + (D-A)/(1 + exp(B*(C-x)))^S,
+  data = data.frame(x=x, y=y),
+  start = c(B = 1, S = 1),
+  lower = c(0, 0),
+  control = nls.lm.control(maxiter = 1024, maxfev=10000))
+```
+
+Let's look at the estimates:
+
+```{r estimates}
+coef(fit_drc)
+coef(fit_minpack)
+```
+
+They are totally different. 
+
+Let's plot the likelihood:
+
+```{r graph1}
+lhd <- function(y, A, B, C, D, S, sigma){
+  exp(sum(dnorm(y, A + (D-A)/(1 + exp(B*(C-x)))^S, sigma, log = TRUE)))
+}
+BandS <- expand.grid(
+  B = seq(0.2, 30, length.out = 150),
+  S = seq(0.1, 50, length.out = 150)
+)
+dat <- cbind(BandS, lhd = apply(BandS, 1, function(BS){
+  lhd(y, A = A, B = BS[1], C = C, D = D, S = BS[2], sigma = 6)
+})) 
+library(graph3d)
+graph3d(dat, ~B, ~S, ~lhd, style = "surface", keepAspectRatio = FALSE)
+```
+
+On the grid we used to do this graph, the maximum of the likelihood is 
+attained at:
+
+```{r maxlhd}
+dat[which(dat$lhd == max(dat$lhd)), ]
+```
+
+So, `nlsLM` well estimates the max-likelihood, while the estimates 
+provided by `drm` fall in a flat region of the likelihood.
+
+Let'z zoom:
+
+```{r graph2}
+BandS <- expand.grid(
+  B = seq(0.2, 6, length.out = 150),
+  S = seq(0.1, 50, length.out = 150)
+)
+dat <- cbind(BandS, lhd = apply(BandS, 1, function(BS){
+  lhd(y, A = A, B = BS[1], C = C, D = D, S = BS[2], sigma = 6)
+})) 
+dat[which(dat$lhd == max(dat$lhd)), ]
+graph3d(dat, ~B, ~S, ~lhd, style = "surface", keepAspectRatio = FALSE)
+```
+
+This is really a failure of `drm`:
+
+```{r summary_drm}
+summary(fit_drc)
+```
+
+```{r summary_nlsLM}
+summary(fit_minpack)
+```
+
