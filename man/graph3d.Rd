@@ -4,12 +4,14 @@
 \alias{graph3d}
 \title{<Add Title>}
 \usage{
-graph3d(data, width = "100\%", height = "100\%", style = "surface",
-  showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
-  keepAspectRatio = TRUE, verticalRatio = 0.5, tooltip = TRUE,
-  showLegend = TRUE, cameraPosition = list(horizontal = 1, vertical =
-  0.5, distance = 2.8), xMin = NULL, xMax = NULL, yMin = NULL,
-  yMax = NULL, zMin = NULL, zMax = NULL, elementId = NULL)
+graph3d(data = NULL, x = ~x, y = ~y, z = ~z, xlab = NULL,
+  ylab = NULL, zlab = NULL, width = "100\%", height = "100\%",
+  style = "surface", showPerspective = TRUE, showGrid = TRUE,
+  showShadow = FALSE, keepAspectRatio = TRUE, verticalRatio = 0.5,
+  tooltip = TRUE, showLegend = TRUE, cameraPosition = list(horizontal
+  = 1, vertical = 0.5, distance = 2.8), xMin = NULL, xMax = NULL,
+  yMin = NULL, yMax = NULL, zMin = NULL, zMax = NULL,
+  elementId = NULL)
 }
 \description{
 <Add Description>

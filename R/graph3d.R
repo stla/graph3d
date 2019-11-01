@@ -7,22 +7,35 @@ dropNulls <- function(x){
 #' <Add Description>
 #'
 #' @import htmlwidgets
+#' @importFrom lazyeval lazy_eval f_text
 #'
 #' @export
-#' @examples
-#' dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
+#' @details See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
+#' @examples dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 #' graph3d(dat, style = "bar", zMin = 0)
-graph3d <- function(data, width = "100%", height = "100%", style = "surface",
+graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z,
+                    xlab = NULL, ylab = NULL, zlab = NULL,
+                    width = "100%", height = "100%", style = "surface",
                     showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
                     keepAspectRatio = TRUE, verticalRatio = 0.5,
                     tooltip = TRUE, showLegend = TRUE,
-                    cameraPosition = list(horizontal = 1, vertical = 0.5, distance = 2.8),
-                    xMin = NULL, xMax = NULL, yMin = NULL, yMax = NULL, zMin = NULL, zMax = NULL,
+                    cameraPosition = list(horizontal = 1,
+                                          vertical = 0.5,
+                                          distance = 2.8),
+                    xMin = NULL, xMax = NULL, yMin = NULL, yMax = NULL,
+                    zMin = NULL, zMax = NULL,
                     elementId = NULL) {
-
+  dat <- data.frame(
+    x = lazy_eval(x, data),
+    y = lazy_eval(y, data),
+    z = lazy_eval(z, data)
+  )
+  if(is.null(xlab)) xlab <- f_text(x)
+  if(is.null(ylab)) ylab <- f_text(y)
+  if(is.null(zlab)) zlab <- f_text(z)
   # forward options using x
-  x = list(
-    data = data,
+  X <- list(
+    data = dat,
     options1 = list(
       showPerspective = showPerspective,
       showGrid = showGrid,
@@ -42,14 +55,17 @@ graph3d <- function(data, width = "100%", height = "100%", style = "surface",
       yMin = yMin,
       yMax = yMax,
       zMin = zMin,
-      zMax = zMax
+      zMax = zMax,
+      xLabel = xlab,
+      yLabel = ylab,
+      zLabel = zlab
     ))
   )
 
   # create widget
   htmlwidgets::createWidget(
     name = 'graph3d',
-    x,
+    X,
     width = NULL,
     height = NULL,
     package = 'graph3d',
