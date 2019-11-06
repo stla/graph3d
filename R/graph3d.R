@@ -1,3 +1,7 @@
+#' @importFrom htmlwidgets JS saveWidget
+#' @export JS saveWidget
+NULL
+
 dropNulls <- function(x){
   x[!vapply(x, is.null, FUN.VALUE = logical(1))]
 }
@@ -13,6 +17,14 @@ dropNulls <- function(x){
 #' @details See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
 #' @examples dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 #' graph3d(dat, style = "bar", zMin = 0)
+#' graph3d(dat, style = "bar", zMin = 0,
+#'         tooltip = JS(c("function(xyz){",
+#'                        "  var x = 'X: ' + xyz.x.toFixed(2);",
+#'                        "  var y = 'Y: ' + xyz.y.toFixed(2);",
+#'                        "  var z = 'Z: ' + xyz.z.toFixed(2);",
+#'                        "  return  x + '<br/>' + y + '<br/>' + z;",
+#'                        "}"))
+#' )
 graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z,
                     xlab = NULL, ylab = NULL, zlab = NULL,
                     width = "100%", height = "100%", style = "surface",

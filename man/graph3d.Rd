@@ -22,4 +22,12 @@ See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configurati
 \examples{
 dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 graph3d(dat, style = "bar", zMin = 0)
+graph3d(dat, style = "bar", zMin = 0,
+        tooltip = JS(c("function(xyz){",
+                       "  var x = 'X: ' + xyz.x.toFixed(2);",
+                       "  var y = 'Y: ' + xyz.y.toFixed(2);",
+                       "  var z = 'Z: ' + xyz.z.toFixed(2);",
+                       "  return  x + '<br/>' + y + '<br/>' + z;",
+                       "}"))
+)
 }
