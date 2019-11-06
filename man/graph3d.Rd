@@ -30,4 +30,10 @@ graph3d(dat, style = "bar", zMin = 0,
                        "  return  x + '<br/>' + y + '<br/>' + z;",
                        "}"))
 )
+dat <- expand.grid(
+  x = seq(-4,4,length.out=100),
+  y = seq(-4,4,length.out=100)
+)
+dat <- transform(dat, density = dnorm(x)*dnorm(y))
+graph3d(dat, z = ~density, keepAspectRatio = FALSE, verticalRatio = 1)
 }

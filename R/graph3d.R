@@ -25,6 +25,12 @@ dropNulls <- function(x){
 #'                        "  return  x + '<br/>' + y + '<br/>' + z;",
 #'                        "}"))
 #' )
+#' dat <- expand.grid(
+#'   x = seq(-4,4,length.out=100),
+#'   y = seq(-4,4,length.out=100)
+#' )
+#' dat <- transform(dat, density = dnorm(x)*dnorm(y))
+#' graph3d(dat, z = ~density, keepAspectRatio = FALSE, verticalRatio = 1)
 graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z,
                     xlab = NULL, ylab = NULL, zlab = NULL,
                     width = "100%", height = "100%", style = "surface",
