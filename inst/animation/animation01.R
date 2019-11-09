@@ -10,3 +10,5 @@ graph3d(dat, filter = ~t, tooltip = FALSE)
 
 dd <- subset(dat, t == 0)
 graph3d(dd, tooltip = FALSE)
+
+
