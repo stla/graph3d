@@ -31,7 +31,7 @@ dropNulls <- function(x){
 #' )
 #' dat <- transform(dat, density = dnorm(x)*dnorm(y))
 #' graph3d(dat, z = ~density, keepAspectRatio = FALSE, verticalRatio = 1)
-graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z,
+graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
                     xlab = NULL, ylab = NULL, zlab = NULL,
                     width = "100%", height = "100%", style = "surface",
                     showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
@@ -42,12 +42,17 @@ graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z,
                                           distance = 2.8),
                     xMin = NULL, xMax = NULL, yMin = NULL, yMax = NULL,
                     zMin = NULL, zMax = NULL,
+                    showAnimationControls = TRUE, animationInterval = 100,
+                    animationPreload = TRUE,
                     elementId = NULL) {
   dat <- data.frame(
     x = lazy_eval(x, data),
     y = lazy_eval(y, data),
     z = lazy_eval(z, data)
   )
+  if(!is.null(filter)){
+    dat[["filter"]] <- lazy_eval(filter, data)
+  }
   if(is.null(xlab)) xlab <- f_text(x)
   if(is.null(ylab)) ylab <- f_text(y)
   if(is.null(zlab)) zlab <- f_text(z)
@@ -76,7 +81,10 @@ graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z,
       zMax = zMax,
       xLabel = xlab,
       yLabel = ylab,
-      zLabel = zlab
+      zLabel = zlab,
+      showAnimationControls = showAnimationControls,
+      animationInterval = animationInterval,
+      animationPreload = animationPreload
     ))
   )
 
