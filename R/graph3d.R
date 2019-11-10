@@ -67,7 +67,7 @@ graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
   # forward options using x
   X <- list(
     data = dat,
-    options1 = list(
+    options = dropNulls(list(
       showPerspective = showPerspective,
       showGrid = showGrid,
       showShadow = showShadow,
@@ -75,9 +75,7 @@ graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
       verticalRatio = verticalRatio,
       showAnimationControls = showAnimationControls,
       animationInterval = animationInterval,
-      animationPreload = animationPreload
-    ),
-    options2 = dropNulls(list(
+      animationPreload = animationPreload,
       width = width,
       height = height,
       style = style,

@@ -15,17 +15,9 @@ HTMLWidgets.widget({
         var data = new vis.DataSet();
         data.add(HTMLWidgets.dataframeToD3(x.data));
 
-        /*var options = {
-          showPerspective: true,
-          showGrid: true,
-          showShadow: false,
-          keepAspectRatio: true,
-          verticalRatio: 0.5,
-        };*/
+        graph3d = new vis.Graph3d(el, data, x.options);
 
-        graph3d = new vis.Graph3d(el, data, x.options1);
-
-        graph3d.setOptions(x.options2);
+//        graph3d.setOptions(x.options2);
 
       },
 

@@ -35,7 +35,7 @@
             var yy = x*Math.sin(t) + y*Math.cos(t);
             var value = custom(xx, yy);
             data.add([
-              {x:x,y:y,z:value,filter:t,style:value}
+              {x:x,y:y,z:value,filter:t}//,style:value}
             ]);
           }
         }
@@ -61,7 +61,7 @@
       graph = new vis.Graph3d(container, data, options);
     }
   </script>
-  
+
 </head>
 
 <body onload="drawVisualization();">
