@@ -15,9 +15,11 @@ dropNulls <- function(x){
 #'
 #' @export
 #' @details See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
-#' @examples dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
-#' graph3d(dat, style = "bar", zMin = 0)
-#' graph3d(dat, style = "bar", zMin = 0,
+#' @examples # 3d histogram
+#' dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
+#' graph3d(dat, type = "bar", zMin = 0)
+#' # custom tooltips
+#' graph3d(dat, type = "bar", zMin = 0,
 #'         tooltip = JS(c("function(xyz){",
 #'                        "  var x = 'X: ' + xyz.x.toFixed(2);",
 #'                        "  var y = 'Y: ' + xyz.y.toFixed(2);",
@@ -25,6 +27,8 @@ dropNulls <- function(x){
 #'                        "  return  x + '<br/>' + y + '<br/>' + z;",
 #'                        "}"))
 #' )
+#'
+#' # bivariate Gaussian
 #' dat <- expand.grid(
 #'   x = seq(-4,4,length.out=100),
 #'   y = seq(-4,4,length.out=100)
@@ -39,9 +43,11 @@ dropNulls <- function(x){
 #' dat <- expand.grid(x = x_, y = y_, t = t_)
 #' dat <- transform(dat, z = f(x*cos(t) - y*sin(t), x*sin(t) + y*cos(t)))
 #' graph3d(dat, filter = ~t, tooltip = FALSE)
-graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
+graph3d <- function(data = NULL,
+                    x = ~x, y = ~y, z = ~z, filter = NULL, style = NULL,
+                    type = "surface",
                     xlab = NULL, ylab = NULL, zlab = NULL,
-                    width = "100%", height = "100%", style = "surface",
+                    width = "100%", height = "100%",
                     showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
                     keepAspectRatio = TRUE, verticalRatio = 0.5,
                     tooltip = TRUE, showLegend = TRUE,
@@ -61,6 +67,9 @@ graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
   if(!is.null(filter)){
     dat[["filter"]] <- lazy_eval(filter, data)
   }
+  if(!is.null(style)){
+    dat[["style"]] <- lazy_eval(style, data)
+  }
   if(is.null(xlab)) xlab <- f_text(x)
   if(is.null(ylab)) ylab <- f_text(y)
   if(is.null(zlab)) zlab <- f_text(z)
@@ -78,7 +87,7 @@ graph3d <- function(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
       animationPreload = animationPreload,
       width = width,
       height = height,
-      style = style,
+      style = type,
       tooltip = tooltip,
       showLegend = showLegend,
       cameraPosition = cameraPosition,

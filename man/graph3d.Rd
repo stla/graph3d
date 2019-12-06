@@ -5,14 +5,15 @@
 \title{<Add Title>}
 \usage{
 graph3d(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
-  xlab = NULL, ylab = NULL, zlab = NULL, width = "100\%",
-  height = "100\%", style = "surface", showPerspective = TRUE,
-  showGrid = TRUE, showShadow = FALSE, keepAspectRatio = TRUE,
-  verticalRatio = 0.5, tooltip = TRUE, showLegend = TRUE,
-  cameraPosition = list(horizontal = 1, vertical = 0.5, distance = 2.8),
-  xMin = NULL, xMax = NULL, yMin = NULL, yMax = NULL,
-  zMin = NULL, zMax = NULL, showAnimationControls = TRUE,
-  animationInterval = 100, animationPreload = TRUE, elementId = NULL)
+  style = NULL, type = "surface", xlab = NULL, ylab = NULL,
+  zlab = NULL, width = "100\%", height = "100\%",
+  showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
+  keepAspectRatio = TRUE, verticalRatio = 0.5, tooltip = TRUE,
+  showLegend = TRUE, cameraPosition = list(horizontal = 1, vertical =
+  0.5, distance = 2.8), xMin = NULL, xMax = NULL, yMin = NULL,
+  yMax = NULL, zMin = NULL, zMax = NULL,
+  showAnimationControls = TRUE, animationInterval = 100,
+  animationPreload = TRUE, elementId = NULL)
 }
 \description{
 <Add Description>
@@ -22,8 +23,8 @@ See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configurati
 }
 \examples{
 dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
-graph3d(dat, style = "bar", zMin = 0)
-graph3d(dat, style = "bar", zMin = 0,
+graph3d(dat, type = "bar", zMin = 0)
+graph3d(dat, type = "bar", zMin = 0,
         tooltip = JS(c("function(xyz){",
                        "  var x = 'X: ' + xyz.x.toFixed(2);",
                        "  var y = 'Y: ' + xyz.y.toFixed(2);",

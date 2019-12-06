@@ -43,7 +43,7 @@ dat <- cbind(BandS, lhd = apply(BandS, 1, function(BS){
 dat[which(dat$lhd == max(dat$lhd)), ]
 
 library(graph3d)
-graph3d(dat, ~B, ~S, ~lhd, style = "surface", keepAspectRatio = FALSE)
+graph3d(dat, ~B, ~S, ~lhd, type = "surface", keepAspectRatio = FALSE)
 
 
 BandS <- expand.grid(
@@ -58,7 +58,7 @@ dat <- cbind(BandS, lhd = apply(BandS, 1, function(BS){
 dat[which(dat$lhd == max(dat$lhd)), ]
 
 library(graph3d)
-graph3d(dat, ~B, ~S, ~lhd, style = "surface", keepAspectRatio = FALSE)
+graph3d(dat, ~B, ~S, ~lhd, type = "surface", keepAspectRatio = FALSE)
 
 
 
@@ -78,6 +78,6 @@ dat <- cbind(BandS, RSS = apply(BandS, 1, function(BS){
 
 library(graph3d)
 names(dat) <- c("x", "y", "z")
-graph3d(dat, style = "surface", keepAspectRatio = FALSE)
+graph3d(dat, type = "surface", keepAspectRatio = FALSE)
 dat[which(dat$z == min(dat$z)), ]
 

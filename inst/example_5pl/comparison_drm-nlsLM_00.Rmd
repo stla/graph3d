@@ -67,7 +67,7 @@ dat <- cbind(BandS, lhd = apply(BandS, 1, function(BS){
   lhd(y, A = A, B = BS[1], C = C, D = D, S = BS[2], sigma = 6)
 })) 
 library(graph3d)
-graph3d(dat, ~B, ~S, ~lhd, style = "surface", keepAspectRatio = FALSE)
+graph3d(dat, ~B, ~S, ~lhd, type = "surface", keepAspectRatio = FALSE)
 ```
 
 On the grid we used to do this graph, the maximum of the likelihood is 
@@ -91,7 +91,7 @@ dat <- cbind(BandS, lhd = apply(BandS, 1, function(BS){
   lhd(y, A = A, B = BS[1], C = C, D = D, S = BS[2], sigma = 6)
 })) 
 dat[which(dat$lhd == max(dat$lhd)), ]
-graph3d(dat, ~B, ~S, ~lhd, style = "surface", keepAspectRatio = FALSE)
+graph3d(dat, ~B, ~S, ~lhd, type = "surface", keepAspectRatio = FALSE)
 ```
 
 This is really a failure of `drm`:
