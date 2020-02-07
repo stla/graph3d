@@ -21,11 +21,13 @@ HTMLWidgets.widget({
 
       },
 
-//      resize: function(width, height) {
+      resize: function(width, height) {
 
         // TODO: code to re-render the widget with a new size
+        // maybe:
+        graph3d.setOptions({width: width, height: height});
 
-//      }
+      },
 
       s: graph3d
     };

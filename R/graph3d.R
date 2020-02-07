@@ -15,10 +15,10 @@ dropNulls <- function(x){
 #'
 #' @export
 #' @details See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
-#' @examples # 3d histogram
+#' @examples # 3d histogram ####
 #' dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 #' graph3d(dat, type = "bar", zMin = 0)
-#' # custom tooltips
+#' # with custom tooltips
 #' graph3d(dat, type = "bar", zMin = 0,
 #'         tooltip = JS(c("function(xyz){",
 #'                        "  var x = 'X: ' + xyz.x.toFixed(2);",
@@ -28,7 +28,7 @@ dropNulls <- function(x){
 #'                        "}"))
 #' )
 #'
-#' # bivariate Gaussian
+#' # bivariate Gaussian density ####
 #' dat <- expand.grid(
 #'   x = seq(-4,4,length.out=100),
 #'   y = seq(-4,4,length.out=100)
@@ -36,36 +36,41 @@ dropNulls <- function(x){
 #' dat <- transform(dat, density = dnorm(x)*dnorm(y))
 #' graph3d(dat, z = ~density, keepAspectRatio = FALSE, verticalRatio = 1)
 #'
-#' # animation
+#' # animation ####
 #' f <- function(x, y) sin(x/50) * cos(y/50) * 50 + 50
 #' t_ <- seq(0, 2*pi, length.out = 90)[-90]
 #' x_ <- y_ <- seq(0, 314, length.out = 50)
 #' dat <- expand.grid(x = x_, y = y_, t = t_)
 #' dat <- transform(dat, z = f(x*cos(t) - y*sin(t), x*sin(t) + y*cos(t)))
-#' graph3d(dat, filter = ~t, tooltip = FALSE)
+#' graph3d(dat, frame = ~t, tooltip = FALSE)
 graph3d <- function(data = NULL,
-                    x = ~x, y = ~y, z = ~z, filter = NULL, style = NULL,
+                    x = ~x, y = ~y, z = ~z, frame = NULL, style = NULL,
                     type = "surface",
+                    surfaceColors =
+                      c("#FF0000", "#FFF000", "#00FF00", "#68E8FB", "#000FFF"),
                     xlab = NULL, ylab = NULL, zlab = NULL,
+                    xValueLabel = NULL, yValueLabel = NULL, zValueLabel = NULL,
                     width = "100%", height = "100%",
                     showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
                     keepAspectRatio = TRUE, verticalRatio = 0.5,
-                    tooltip = TRUE, showLegend = TRUE,
+                    tooltip = TRUE,
+                    showLegend = TRUE, legendLabel = NULL,
                     cameraPosition = list(horizontal = 1,
                                           vertical = 0.5,
                                           distance = 2.8),
-                    xMin = NULL, xMax = NULL, yMin = NULL, yMax = NULL,
+                    xMin = NULL, xMax = NULL,
+                    yMin = NULL, yMax = NULL,
                     zMin = NULL, zMax = NULL,
                     showAnimationControls = TRUE, animationInterval = 100,
-                    animationPreload = TRUE,
+                    animationPreload = TRUE, frameLabel = NULL,
                     elementId = NULL) {
   dat <- data.frame(
     x = lazy_eval(x, data),
     y = lazy_eval(y, data),
     z = lazy_eval(z, data)
   )
-  if(!is.null(filter)){
-    dat[["filter"]] <- lazy_eval(filter, data)
+  if(!is.null(frame)){
+    dat[["filter"]] <- lazy_eval(frame, data)
   }
   if(!is.null(style)){
     dat[["style"]] <- lazy_eval(style, data)
@@ -85,11 +90,14 @@ graph3d <- function(data = NULL,
       showAnimationControls = showAnimationControls,
       animationInterval = animationInterval,
       animationPreload = animationPreload,
+      filterLabel = frameLabel,
       width = width,
       height = height,
       style = type,
+      surfaceColors = surfaceColors,
       tooltip = tooltip,
       showLegend = showLegend,
+      legendLabel = legendLabel,
       cameraPosition = cameraPosition,
       xMin = xMin,
       xMax = xMax,
@@ -99,7 +107,10 @@ graph3d <- function(data = NULL,
       zMax = zMax,
       xLabel = xlab,
       yLabel = ylab,
-      zLabel = zlab
+      zLabel = zlab,
+      xValueLabel = xValueLabel,
+      yValueLabel = yValueLabel,
+      zValueLabel = zValueLabel
     ))
   )
 

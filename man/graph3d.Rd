@@ -4,16 +4,44 @@
 \alias{graph3d}
 \title{<Add Title>}
 \usage{
-graph3d(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
-  style = NULL, type = "surface", xlab = NULL, ylab = NULL,
-  zlab = NULL, width = "100\%", height = "100\%",
-  showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
-  keepAspectRatio = TRUE, verticalRatio = 0.5, tooltip = TRUE,
-  showLegend = TRUE, cameraPosition = list(horizontal = 1, vertical =
-  0.5, distance = 2.8), xMin = NULL, xMax = NULL, yMin = NULL,
-  yMax = NULL, zMin = NULL, zMax = NULL,
-  showAnimationControls = TRUE, animationInterval = 100,
-  animationPreload = TRUE, elementId = NULL)
+graph3d(
+  data = NULL,
+  x = ~x,
+  y = ~y,
+  z = ~z,
+  frame = NULL,
+  style = NULL,
+  type = "surface",
+  surfaceColors = c("#FF0000", "#FFF000", "#00FF00", "#68E8FB", "#000FFF"),
+  xlab = NULL,
+  ylab = NULL,
+  zlab = NULL,
+  xValueLabel = NULL,
+  yValueLabel = NULL,
+  zValueLabel = NULL,
+  width = "100\%",
+  height = "100\%",
+  showPerspective = TRUE,
+  showGrid = TRUE,
+  showShadow = FALSE,
+  keepAspectRatio = TRUE,
+  verticalRatio = 0.5,
+  tooltip = TRUE,
+  showLegend = TRUE,
+  legendLabel = NULL,
+  cameraPosition = list(horizontal = 1, vertical = 0.5, distance = 2.8),
+  xMin = NULL,
+  xMax = NULL,
+  yMin = NULL,
+  yMax = NULL,
+  zMin = NULL,
+  zMax = NULL,
+  showAnimationControls = TRUE,
+  animationInterval = 100,
+  animationPreload = TRUE,
+  frameLabel = NULL,
+  elementId = NULL
+)
 }
 \description{
 <Add Description>
@@ -22,8 +50,10 @@ graph3d(data = NULL, x = ~x, y = ~y, z = ~z, filter = NULL,
 See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
 }
 \examples{
+# 3d histogram ####
 dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 graph3d(dat, type = "bar", zMin = 0)
+# with custom tooltips
 graph3d(dat, type = "bar", zMin = 0,
         tooltip = JS(c("function(xyz){",
                        "  var x = 'X: ' + xyz.x.toFixed(2);",
@@ -32,6 +62,8 @@ graph3d(dat, type = "bar", zMin = 0,
                        "  return  x + '<br/>' + y + '<br/>' + z;",
                        "}"))
 )
+
+# bivariate Gaussian density ####
 dat <- expand.grid(
   x = seq(-4,4,length.out=100),
   y = seq(-4,4,length.out=100)
@@ -39,11 +71,11 @@ dat <- expand.grid(
 dat <- transform(dat, density = dnorm(x)*dnorm(y))
 graph3d(dat, z = ~density, keepAspectRatio = FALSE, verticalRatio = 1)
 
-# animation
+# animation ####
 f <- function(x, y) sin(x/50) * cos(y/50) * 50 + 50
 t_ <- seq(0, 2*pi, length.out = 90)[-90]
 x_ <- y_ <- seq(0, 314, length.out = 50)
 dat <- expand.grid(x = x_, y = y_, t = t_)
 dat <- transform(dat, z = f(x*cos(t) - y*sin(t), x*sin(t) + y*cos(t)))
-graph3d(dat, filter = ~t, tooltip = FALSE)
+graph3d(dat, frame = ~t, tooltip = FALSE)
 }

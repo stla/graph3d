@@ -1,8 +1,7 @@
 dependencies:
-  - name: vis
-    version: 4.21.0
-    src: htmlwidgets/lib/vis-4.21.0/dist
+  - name: vis-graph3d
+    version: 5.4.3
+    src: htmlwidgets/lib
     script:
-      - vis.min.js
-    stylesheet:
-      - vis.min.css
+      - vis-graph3d.min.js
+
