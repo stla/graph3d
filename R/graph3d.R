@@ -61,6 +61,7 @@ graph3d <- function(data = NULL,
                     xMin = NULL, xMax = NULL,
                     yMin = NULL, yMax = NULL,
                     zMin = NULL, zMax = NULL,
+                    xStep = NULL, yStep = NULL, zStep = NULL,
                     showAnimationControls = TRUE, animationInterval = 100,
                     animationPreload = TRUE, frameLabel = NULL,
                     elementId = NULL) {
@@ -105,6 +106,9 @@ graph3d <- function(data = NULL,
       yMax = yMax,
       zMin = zMin,
       zMax = zMax,
+      xStep = xStep,
+      yStep = yStep,
+      zStep = zStep,
       xLabel = xlab,
       yLabel = ylab,
       zLabel = zlab,
@@ -143,7 +147,8 @@ graph3d <- function(data = NULL,
 #'
 #' @export
 graph3dOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'graph3d', width, height, package = 'graph3d')
+  htmlwidgets::shinyWidgetOutput(outputId, 'graph3d', width, height,
+                                 package = 'graph3d')
 }
 
 #' @rdname graph3d-shiny
