@@ -66,6 +66,16 @@ dropNulls <- function(x){
 #' )
 #' graph3d(dat, type = "line", dataColor = list(strokeWidth = 5, stroke = "red"),
 #'         verticalRatio = 1)
+#'
+#' # a complex function ####
+#' dat <- expand.grid(
+#'   x = seq(-1, 1, length.out = 100),
+#'   y = seq(-1, 1, length.out = 100)
+#' )
+#' dat <- transform(dat, sine = sin(x + 1i*y))
+#' dat <- transform(dat, modulus = Mod(sine), phase = Arg(sine))
+#' graph3d(dat, z = ~modulus, style = ~phase, type = "dot-color",
+#'         legendLabel = "phase")
 graph3d <- function(data = NULL,
                     x = ~x, y = ~y, z = ~z, frame = NULL, style = NULL,
                     type = "surface",
