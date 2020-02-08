@@ -10,6 +10,75 @@ dropNulls <- function(x){
 #'
 #' Generate an interactive 3D chart.
 #'
+#' @param data dataframe containing the data for the chart; if not \code{NULL},
+#' the variables passed to \code{x}, \code{y}, \code{z}, \code{frame} and
+#' \code{style} are searched among the columns of \code{data}
+#' @param x a right-sided formula giving the variable for the locations of the
+#' points on the x-axis; required
+#' @param y a right-sided formula giving the variable for the locations of the
+#' points on the y-axis; required
+#' @param z a right-sided formula giving the variable for the locations of the
+#' points on the z-axis; required
+#' @param frame a right-sided formula giving the variable for the frames of the
+#' animation; optional
+#' @param style a right-sided formula required for \code{type="dot-color"}
+#' and \code{type="dot-size"}; the variable given by this formula can be a
+#' numeric vector for the data value appearing in the legend, or a list of
+#' style properties; see the examples
+#' @param type the type of the chart, one of \code{"bar"}, \code{"bar-color"},
+#' \code{"bar-size"}, \code{"dot"}, \code{"dot-line"}, \code{"dot-color"},
+#' \code{"dot-size"}, \code{"line"}, \code{"grid"}, or \code{"surface"}
+#' @param surfaceColors a vector of colors for \code{type="surface"}, or a list
+#' of the form
+#' \code{list(hue = list(start=-360, end=360, saturation=50, brightness=100, colorStops=8))};
+#' see the vis-graph3d documentation for more information
+#' @param dataColor a string or a list; see the \code{type="line"} example and
+#' the vis-graph3d documentation
+#' @param xBarWidth,ybarWidth the widths of bars in x and y directions for
+#' \code{type="bar"} and \code{type="bar-color"};
+#' by default, the width is equal to the smallest distance between the data points
+#' @param xlab string, the label on the x-axis
+#' @param ylab string, the label on the y-axis
+#' @param zlab string, the label on the z-axis
+#' @param xValueLabel JavaScript function for custom formatting of the labels
+#' along the x-axis, for example \code{JS("function(x){return (x * 100) + '\%'}")}
+#' @param yValueLabel same as \code{xValueLabel} for the y-axis
+#' @param zValueLabel same as \code{xValueLabel} for the z-axis
+#' @param width,height the dimensions of the chart given as strings, in pixels
+#' (e.g. \code{"400px"}) or percentages (e.g. \code{"80\%"})
+#' @param backgroundColor
+#' @param showPerspective
+#' @param showGrid
+#' @param showShadow
+#' @param showXAxis
+#' @param showYAxis
+#' @param showZAxis
+#' @param axisColor
+#' @param keepAspectRatio
+#' @param verticalRatio
+#' @param tooltip
+#' @param tooltipDelay
+#' @param tooltipStyle
+#' @param showLegend
+#' @param legendLabel
+#' @param cameraPosition
+#' @param xCenter
+#' @param yCenter
+#' @param xMin
+#' @param xMax
+#' @param yMin
+#' @param yMax
+#' @param zMin
+#' @param zMax
+#' @param xStep
+#' @param yStep
+#' @param zStep
+#' @param showAnimationControls
+#' @param animationInterval
+#' @param animationPreload
+#' @param frameLabel
+#' @param elementId
+#'
 #' @import htmlwidgets
 #' @importFrom lazyeval lazy_eval f_text is_formula f_lhs f_rhs
 #'
@@ -137,13 +206,13 @@ graph3d <- function(data = NULL,
   if(is.null(f_rhs(z)) || !is.null(f_lhs(z))){
     stop("`z` must be a right-sided formula.")
   }
-  if(!is.element(w <- f_text(x), names(data))){
+  if(!is.null(data) && !is.element(w <- f_text(x), names(data))){
     stop(sprintf("Variable `%s` is not in the data.", w))
   }
-  if(!is.element(w <- f_text(y), names(data))){
+  if(!is.null(data) && !is.element(w <- f_text(y), names(data))){
     stop(sprintf("Variable `%s` is not in the data.", w))
   }
-  if(!is.element(w <- f_text(z), names(data))){
+  if(!is.null(data) && !is.element(w <- f_text(z), names(data))){
     stop(sprintf("Variable `%s` is not in the data.", w))
   }
   dat <- data.frame(
@@ -158,7 +227,7 @@ graph3d <- function(data = NULL,
     if(is.null(f_rhs(frame)) || !is.null(f_lhs(frame))){
       stop("`frame` must be a right-sided formula.")
     }
-    if(!is.element(w <- f_text(frame), names(data))){
+    if(!is.null(data) && !is.element(w <- f_text(frame), names(data))){
       stop(sprintf("Variable `%s` is not in the data.", w))
     }
     dat[["filter"]] <- lazy_eval(frame, data)
@@ -170,7 +239,7 @@ graph3d <- function(data = NULL,
     if(is.null(f_rhs(style)) || !is.null(f_lhs(style))){
       stop("`style` must be a right-sided formula.")
     }
-    if(!is.element(w <- f_text(style), names(data))){
+    if(!is.null(data) && !is.element(w <- f_text(style), names(data))){
       stop(sprintf("Variable `%s` is not in the data.", w))
     }
     dat[["style"]] <- lazy_eval(style, data)

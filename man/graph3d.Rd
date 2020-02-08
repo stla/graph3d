@@ -58,6 +58,62 @@ graph3d(
   elementId = NULL
 )
 }
+\arguments{
+\item{data}{dataframe containing the data for the chart; if not \code{NULL},
+the variables passed to \code{x}, \code{y}, \code{z}, \code{frame} and
+\code{style} are searched among the columns of \code{data}}
+
+\item{x}{a right-sided formula giving the variable for the locations of the
+points on the x-axis; required}
+
+\item{y}{a right-sided formula giving the variable for the locations of the
+points on the y-axis; required}
+
+\item{z}{a right-sided formula giving the variable for the locations of the
+points on the z-axis; required}
+
+\item{frame}{a right-sided formula giving the variable for the frames of the
+animation; optional}
+
+\item{style}{a right-sided formula required for \code{type="dot-color"}
+and \code{type="dot-size"}; the variable given by this formula can be a
+numeric vector for the data value appearing in the legend, or a list of
+style properties; see the examples}
+
+\item{type}{the type of the chart, one of \code{"bar"}, \code{"bar-color"},
+\code{"bar-size"}, \code{"dot"}, \code{"dot-line"}, \code{"dot-color"},
+\code{"dot-size"}, \code{"line"}, \code{"grid"}, or \code{"surface"}}
+
+\item{surfaceColors}{a vector of colors for \code{type="surface"}, or a list
+of the form
+\code{list(hue = list(start=-360, end=360, saturation=50, brightness=100, colorStops=8))};
+see the vis-graph3d documentation for more information}
+
+\item{dataColor}{a string or a list; see the \code{type="line"} example and
+the vis-graph3d documentation}
+
+\item{xBarWidth, ybarWidth}{the widths of bars in x and y directions for
+\code{type="bar"} and \code{type="bar-color"};
+by default, the width is equal to the smallest distance between the data points}
+
+\item{xlab}{string, the label on the x-axis}
+
+\item{ylab}{string, the label on the y-axis}
+
+\item{zlab}{string, the label on the z-axis}
+
+\item{xValueLabel}{JavaScript function for custom formatting of the labels
+along the x-axis, for example \code{JS("function(x){return (x * 100) + '\%'}")}}
+
+\item{yValueLabel}{same as \code{xValueLabel} for the y-axis}
+
+\item{zValueLabel}{same as \code{xValueLabel} for the z-axis}
+
+\item{width, height}{the dimensions of the chart given as strings, in pixels
+(e.g. \code{"400px"}) or percentages (e.g. \code{"80\%"})}
+
+\item{elementId}{}
+}
 \description{
 Generate an interactive 3D chart.
 }
