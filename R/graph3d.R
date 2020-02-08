@@ -94,6 +94,21 @@ graph3d <- function(data = NULL,
                     showAnimationControls = TRUE, animationInterval = 100,
                     animationPreload = TRUE, frameLabel = NULL,
                     elementId = NULL) {
+  type <- match.arg(
+    type,
+    c(
+      "surface",
+      "line",
+      "dot",
+      "dot-line",
+      "dot-color",
+      "dot-size",
+      "bar",
+      "bar-color",
+      "bar-size",
+      "grid"
+    )
+  )
   if(!is_formula(x)){
     stop("`x` must be a right-sided formula.")
   }
