@@ -11,7 +11,7 @@ dropNulls <- function(x){
 #' Generate an interactive 3D chart.
 #'
 #' @import htmlwidgets
-#' @importFrom lazyeval lazy_eval f_text
+#' @importFrom lazyeval lazy_eval f_text is_formula f_lhs f_rhs
 #'
 #' @export
 #' @details See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
@@ -94,15 +94,60 @@ graph3d <- function(data = NULL,
                     showAnimationControls = TRUE, animationInterval = 100,
                     animationPreload = TRUE, frameLabel = NULL,
                     elementId = NULL) {
+  if(!is_formula(x)){
+    stop("`x` must be a right-sided formula.")
+  }
+  if(is.null(f_rhs(x)) || !is.null(f_lhs(x))){
+    stop("`x` must be a right-sided formula.")
+  }
+  if(!is_formula(y)){
+    stop("`y` must be a right-sided formula.")
+  }
+  if(is.null(f_rhs(y)) || !is.null(f_lhs(y))){
+    stop("`y` must be a right-sided formula.")
+  }
+  if(!is_formula(z)){
+    stop("`z` must be a right-sided formula.")
+  }
+  if(is.null(f_rhs(z)) || !is.null(f_lhs(z))){
+    stop("`z` must be a right-sided formula.")
+  }
+  if(!is.element(w <- f_text(x), names(data))){
+    stop(sprintf("Variable `%s` is not in the data.", w))
+  }
+  if(!is.element(w <- f_text(y), names(data))){
+    stop(sprintf("Variable `%s` is not in the data.", w))
+  }
+  if(!is.element(w <- f_text(z), names(data))){
+    stop(sprintf("Variable `%s` is not in the data.", w))
+  }
   dat <- data.frame(
     x = lazy_eval(x, data),
     y = lazy_eval(y, data),
     z = lazy_eval(z, data)
   )
   if(!is.null(frame)){
+    if(!is_formula(frame)){
+      stop("`frame` must be a right-sided formula.")
+    }
+    if(is.null(f_rhs(frame)) || !is.null(f_lhs(frame))){
+      stop("`frame` must be a right-sided formula.")
+    }
+    if(!is.element(w <- f_text(frame), names(data))){
+      stop(sprintf("Variable `%s` is not in the data.", w))
+    }
     dat[["filter"]] <- lazy_eval(frame, data)
   }
   if(!is.null(style)){
+    if(!is_formula(style)){
+      stop("`style` must be a right-sided formula.")
+    }
+    if(is.null(f_rhs(style)) || !is.null(f_lhs(style))){
+      stop("`style` must be a right-sided formula.")
+    }
+    if(!is.element(w <- f_text(style), names(data))){
+      stop(sprintf("Variable `%s` is not in the data.", w))
+    }
     dat[["style"]] <- lazy_eval(style, data)
   }
   if(is.null(xlab)) xlab <- f_text(x)
