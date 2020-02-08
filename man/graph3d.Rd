@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph3d.R
 \name{graph3d}
 \alias{graph3d}
-\title{<Add Title>}
+\title{3D chart}
 \usage{
 graph3d(
   data = NULL,
@@ -13,6 +13,8 @@ graph3d(
   style = NULL,
   type = "surface",
   surfaceColors = c("#FF0000", "#FFF000", "#00FF00", "#68E8FB", "#000FFF"),
+  xBarWidth = NULL,
+  yBarWidth = NULL,
   xlab = NULL,
   ylab = NULL,
   zlab = NULL,
@@ -21,15 +23,24 @@ graph3d(
   zValueLabel = NULL,
   width = "100\%",
   height = "100\%",
+  backgroundColor = NULL,
   showPerspective = TRUE,
   showGrid = TRUE,
   showShadow = FALSE,
+  showXAxis = TRUE,
+  showYAxis = TRUE,
+  showZAxis = TRUE,
+  axisColor = NULL,
   keepAspectRatio = TRUE,
   verticalRatio = 0.5,
   tooltip = TRUE,
+  tooltipDelay = NULL,
+  tooltipStyle = NULL,
   showLegend = TRUE,
   legendLabel = NULL,
   cameraPosition = list(horizontal = 1, vertical = 0.5, distance = 2.8),
+  xCenter = NULL,
+  yCenter = NULL,
   xMin = NULL,
   xMax = NULL,
   yMin = NULL,
@@ -47,7 +58,7 @@ graph3d(
 )
 }
 \description{
-<Add Description>
+Generate an interactive 3D chart.
 }
 \details{
 See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
@@ -56,6 +67,8 @@ See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configurati
 # 3d histogram ####
 dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 graph3d(dat, type = "bar", zMin = 0)
+# change bar widths
+graph3d(dat, type = "bar", zMin = 0, xBarWidth = 0.3, yBarWidth = 0.3)
 # with custom tooltips
 graph3d(dat, type = "bar", zMin = 0,
         tooltip = JS(c("function(xyz){",
@@ -81,4 +94,15 @@ x_ <- y_ <- seq(0, 314, length.out = 50)
 dat <- expand.grid(x = x_, y = y_, t = t_)
 dat <- transform(dat, z = f(x*cos(t) - y*sin(t), x*sin(t) + y*cos(t)))
 graph3d(dat, frame = ~t, tooltip = FALSE)
+
+# scatterplot ####
+dat <- iris
+dat$style <- I(lapply(iris$Species, function(x){
+  switch(as.character(x),
+         setosa     = list(fill="red",   stroke="#'000"),
+         versicolor = list(fill="green", stroke="#'000"),
+         virginica  = list(fill="blue",  stroke="#'000"))
+}))
+graph3d(dat, x = ~Sepal.Length, y = ~Sepal.Width, z = ~Petal.Length,
+        style = ~style, type = "dot-color", showLegend = FALSE)
 }

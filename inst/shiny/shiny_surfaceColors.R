@@ -39,7 +39,9 @@ server <- function(input, output, session){
   })
 
   output[["mygraph"]] <- renderGraph3d({
-    graph3d(dat, surfaceColors = Colors(), showLegend = FALSE)
+    graph3d(dat, surfaceColors = Colors(), showLegend = FALSE,
+            cameraPosition = list(horizontal = 1, vertical=0.5, distance = 1),
+            width = "400px", height = "400px")
   })
 
 }

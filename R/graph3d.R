@@ -3,12 +3,12 @@
 NULL
 
 dropNulls <- function(x){
-  x[!vapply(x, is.null, FUN.VALUE = logical(1))]
+  x[!vapply(x, is.null, FUN.VALUE = logical(1L))]
 }
 
-#' <Add Title>
+#' 3D chart
 #'
-#' <Add Description>
+#' Generate an interactive 3D chart.
 #'
 #' @import htmlwidgets
 #' @importFrom lazyeval lazy_eval f_text
@@ -18,6 +18,8 @@ dropNulls <- function(x){
 #' @examples # 3d histogram ####
 #' dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 #' graph3d(dat, type = "bar", zMin = 0)
+#' # change bar widths
+#' graph3d(dat, type = "bar", zMin = 0, xBarWidth = 0.3, yBarWidth = 0.3)
 #' # with custom tooltips
 #' graph3d(dat, type = "bar", zMin = 0,
 #'         tooltip = JS(c("function(xyz){",
@@ -43,21 +45,37 @@ dropNulls <- function(x){
 #' dat <- expand.grid(x = x_, y = y_, t = t_)
 #' dat <- transform(dat, z = f(x*cos(t) - y*sin(t), x*sin(t) + y*cos(t)))
 #' graph3d(dat, frame = ~t, tooltip = FALSE)
+#'
+#' # scatterplot ####
+#' dat <- iris
+#' dat$style <- I(lapply(iris$Species, function(x){
+#'   switch(as.character(x),
+#'          setosa     = list(fill="red",   stroke="#'000"),
+#'          versicolor = list(fill="green", stroke="#'000"),
+#'          virginica  = list(fill="blue",  stroke="#'000"))
+#' }))
+#' graph3d(dat, x = ~Sepal.Length, y = ~Sepal.Width, z = ~Petal.Length,
+#'         style = ~style, type = "dot-color", showLegend = FALSE)
 graph3d <- function(data = NULL,
                     x = ~x, y = ~y, z = ~z, frame = NULL, style = NULL,
                     type = "surface",
                     surfaceColors =
                       c("#FF0000", "#FFF000", "#00FF00", "#68E8FB", "#000FFF"),
+                    xBarWidth = NULL, yBarWidth = NULL,
                     xlab = NULL, ylab = NULL, zlab = NULL,
                     xValueLabel = NULL, yValueLabel = NULL, zValueLabel = NULL,
                     width = "100%", height = "100%",
+                    backgroundColor = NULL,
                     showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
+                    showXAxis = TRUE, showYAxis = TRUE, showZAxis = TRUE,
+                    axisColor = NULL,
                     keepAspectRatio = TRUE, verticalRatio = 0.5,
-                    tooltip = TRUE,
+                    tooltip = TRUE, tooltipDelay = NULL, tooltipStyle = NULL,
                     showLegend = TRUE, legendLabel = NULL,
                     cameraPosition = list(horizontal = 1,
                                           vertical = 0.5,
                                           distance = 2.8),
+                    xCenter = NULL, yCenter = NULL,
                     xMin = NULL, xMax = NULL,
                     yMin = NULL, yMax = NULL,
                     zMin = NULL, zMax = NULL,
@@ -86,6 +104,10 @@ graph3d <- function(data = NULL,
       showPerspective = showPerspective,
       showGrid = showGrid,
       showShadow = showShadow,
+      showXAxis = showXAxis,
+      showYAxis = showYAxis,
+      showZAxis = showZAxis,
+      axisColor = axisColor,
       keepAspectRatio = keepAspectRatio,
       verticalRatio = verticalRatio,
       showAnimationControls = showAnimationControls,
@@ -94,12 +116,19 @@ graph3d <- function(data = NULL,
       filterLabel = frameLabel,
       width = width,
       height = height,
+      backgroundColor = backgroundColor,
       style = type,
       surfaceColors = surfaceColors,
+      xBarWidth = xBarWidth,
+      yBarWidth = yBarWidth,
       tooltip = tooltip,
+      tooltipDelay = tooltipDelay,
+      tooltipStyle = tooltipStyle,
       showLegend = showLegend,
       legendLabel = legendLabel,
       cameraPosition = cameraPosition,
+      xCenter = xCenter,
+      yCenter = yCenter,
       xMin = xMin,
       xMax = xMax,
       yMin = yMin,
