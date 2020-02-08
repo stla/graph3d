@@ -56,11 +56,22 @@ dropNulls <- function(x){
 #' }))
 #' graph3d(dat, x = ~Sepal.Length, y = ~Sepal.Width, z = ~Petal.Length,
 #'         style = ~style, type = "dot-color", showLegend = FALSE)
+#'
+#' # line ####
+#' t_ <- seq(0, 2*pi, length.out = 200)
+#' dat <- data.frame(
+#'   x = cos(t_),
+#'   y = sin(t_),
+#'   z = 2 * cos(3*t_)
+#' )
+#' graph3d(dat, type = "line", dataColor = list(strokeWidth = 5, stroke = "red"),
+#'         verticalRatio = 1)
 graph3d <- function(data = NULL,
                     x = ~x, y = ~y, z = ~z, frame = NULL, style = NULL,
                     type = "surface",
                     surfaceColors =
                       c("#FF0000", "#FFF000", "#00FF00", "#68E8FB", "#000FFF"),
+                    dataColor = NULL,
                     xBarWidth = NULL, yBarWidth = NULL,
                     xlab = NULL, ylab = NULL, zlab = NULL,
                     xValueLabel = NULL, yValueLabel = NULL, zValueLabel = NULL,
@@ -119,6 +130,7 @@ graph3d <- function(data = NULL,
       backgroundColor = backgroundColor,
       style = type,
       surfaceColors = surfaceColors,
+      dataColor = dataColor,
       xBarWidth = xBarWidth,
       yBarWidth = yBarWidth,
       tooltip = tooltip,
