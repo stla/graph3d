@@ -46,15 +46,24 @@ dropNulls <- function(x){
 #' @param zValueLabel same as \code{xValueLabel} for the z-axis
 #' @param width,height the dimensions of the chart given as strings, in pixels
 #' (e.g. \code{"400px"}) or percentages (e.g. \code{"80\%"})
-#' @param backgroundColor
-#' @param showPerspective
-#' @param showGrid
-#' @param showShadow
-#' @param showXAxis
-#' @param showYAxis
-#' @param showZAxis
-#' @param axisColor
-#' @param keepAspectRatio
+#' @param backgroundColor the background color of the chart, either a string
+#' giving a HTML color (like \code{"red"} or \code{"#00CC00"}), or a list of
+#' the form \code{list(fill="black", stroke="yellow", strokeWidth=3)};
+#' \code{fill} is the chart fill color, \code{stroke} is the color of the chart
+#' border, and \code{strokeWidth} is the border width in pixels
+#' @param showPerspective logical; if \code{TRUE}, the graph is drawn in
+#' perspective: points and lines which are further away are drawn smaller
+#' @param showGrid logical; if \code{TRUE}, grid lines are drawn in the
+#' x-y surface
+#' @param showShadow logical, whether to show shadow on the graph
+#' @param showXAxis logical; if \code{TRUE}, x-axis and x-axis labels are drawn
+#' @param showYAxis logical; if \code{TRUE}, y-axis and y-axis labels are drawn
+#' @param showZAxis logical; if \code{TRUE}, z-axis and z-axis labels are drawn
+#' @param axisColor a HTML color given as a string, the color of the axis lines
+#' and the text along the axes
+#' @param keepAspectRatio logical; if \code{TRUE}, the x-axis and the y-axis
+#' keep their aspect ratio; if \code{FALSE}, the axes are scaled such that they
+#' both have the same, maximum width
 #' @param verticalRatio
 #' @param tooltip
 #' @param tooltipDelay
