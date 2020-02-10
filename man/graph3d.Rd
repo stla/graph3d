@@ -32,6 +32,7 @@ graph3d(
   showYAxis = TRUE,
   showZAxis = TRUE,
   axisColor = NULL,
+  gridColor = NULL,
   keepAspectRatio = TRUE,
   verticalRatio = 0.5,
   tooltip = TRUE,
@@ -135,6 +136,8 @@ x-y surface}
 
 \item{axisColor}{a HTML color given as a string, the color of the axis lines
 and the text along the axes}
+
+\item{gridColor}{a HTML color given as a string, the color of the grid lines}
 
 \item{keepAspectRatio}{logical; if \code{TRUE}, the x-axis and the y-axis
 keep their aspect ratio; if \code{FALSE}, the axes are scaled such that they

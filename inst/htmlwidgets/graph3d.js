@@ -17,15 +17,15 @@ HTMLWidgets.widget({
 
         graph3d = new vis.Graph3d(el, data, x.options);
 
-//        graph3d.setOptions(x.options2);
-
       },
 
       resize: function(width, height) {
 
         // TODO: code to re-render the widget with a new size
         // maybe:
-        graph3d.setOptions({width: width, height: height});
+        // graph3d.setOptions({width: width, height: height});
+        // or:
+        graph3d.setSize(width, height);
 
       },
 
