@@ -55,6 +55,7 @@ graph3d(
   animationInterval = 100,
   animationPreload = TRUE,
   frameLabel = NULL,
+  onclick = NULL,
   elementId = NULL
 )
 }
@@ -205,6 +206,10 @@ loaded as soon as they are requested; if \code{TRUE}, the animation frames
 are automatically loaded in the background}
 
 \item{frameLabel}{string, the label for the animation slider}
+
+\item{onclick}{a JavaScript function to handle the click event on a point;
+see the vis-graph3d documentation and the second example in
+\code{\link{graph3d-shiny}}}
 
 \item{elementId}{an id for the widget}
 }

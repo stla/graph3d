@@ -29,7 +29,8 @@ Output and render functions for using graph3d within Shiny
 applications and interactive Rmd documents.
 }
 \examples{
-\donttest{library(shiny)
+\donttest{# 'surfaceColors' example ####
+library(shiny)
 library(viridisLite)
 
 x <- y <- seq(-10, 10, length.out = 100)
@@ -71,6 +72,49 @@ server <- function(input, output, session){
 
   output[["mygraph"]] <- renderGraph3d({
     graph3d(dat, surfaceColors = Colors(), showLegend = FALSE)
+  })
+
+}
+
+shinyApp(ui, server)
+# ------------------------------------------------------------
+}
+
+\donttest{# 'onclick' example ####
+library(shiny)
+
+dat <- data.frame(x = rnorm(30), y = rnorm(30), z = rnorm(30))
+
+onclick <- c(
+  "function(point){",
+  "  Shiny.setInputValue('point', point);",
+  "}"
+)
+
+ui <- fluidPage(
+  br(),
+  fluidRow(
+    column(
+      width = 4,
+      h4("You clicked:"),
+      verbatimTextOutput("pointClicked")
+    ),
+    column(
+      width = 8,
+      graph3dOutput("mygraph", height = "550px")
+    )
+  )
+)
+
+server <- function(input, output, session){
+
+  output[["mygraph"]] <- renderGraph3d({
+    graph3d(dat, type = "dot", width = "550px", height = "550px",
+            onclick = JS(onclick), tooltip = FALSE)
+  })
+
+  output[["pointClicked"]] <- renderPrint({
+    input[["point"]]
   })
 
 }

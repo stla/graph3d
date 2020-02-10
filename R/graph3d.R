@@ -109,6 +109,9 @@ dropNulls <- function(x){
 #' loaded as soon as they are requested; if \code{TRUE}, the animation frames
 #' are automatically loaded in the background
 #' @param frameLabel string, the label for the animation slider
+#' @param onclick a JavaScript function to handle the click event on a point;
+#' see the vis-graph3d documentation and the second example in
+#' \code{\link{graph3d-shiny}}
 #' @param elementId an id for the widget
 #'
 #' @import htmlwidgets
@@ -206,6 +209,7 @@ graph3d <- function(data = NULL,
                     xStep = NULL, yStep = NULL, zStep = NULL,
                     showAnimationControls = TRUE, animationInterval = 100,
                     animationPreload = TRUE, frameLabel = NULL,
+                    onclick = NULL,
                     elementId = NULL) {
   type <- match.arg(
     type,
@@ -328,7 +332,8 @@ graph3d <- function(data = NULL,
       zLabel = zlab,
       xValueLabel = xValueLabel,
       yValueLabel = yValueLabel,
-      zValueLabel = zValueLabel
+      zValueLabel = zValueLabel,
+      onclick = onclick
     ))
   )
 
@@ -357,7 +362,8 @@ graph3d <- function(data = NULL,
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
 #'
-#' @examples \donttest{library(shiny)
+#' @examples \donttest{# 'surfaceColors' example ####
+#' library(shiny)
 #' library(viridisLite)
 #'
 #' x <- y <- seq(-10, 10, length.out = 100)
@@ -399,6 +405,49 @@ graph3d <- function(data = NULL,
 #'
 #'   output[["mygraph"]] <- renderGraph3d({
 #'     graph3d(dat, surfaceColors = Colors(), showLegend = FALSE)
+#'   })
+#'
+#' }
+#'
+#' shinyApp(ui, server)
+#' # ------------------------------------------------------------
+#' }
+#'
+#' \donttest{# 'onclick' example ####
+#' library(shiny)
+#'
+#' dat <- data.frame(x = rnorm(30), y = rnorm(30), z = rnorm(30))
+#'
+#' onclick <- c(
+#'   "function(point){",
+#'   "  Shiny.setInputValue('point', point);",
+#'   "}"
+#' )
+#'
+#' ui <- fluidPage(
+#'   br(),
+#'   fluidRow(
+#'     column(
+#'       width = 4,
+#'       h4("You clicked:"),
+#'       verbatimTextOutput("pointClicked")
+#'     ),
+#'     column(
+#'       width = 8,
+#'       graph3dOutput("mygraph", height = "550px")
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output, session){
+#'
+#'   output[["mygraph"]] <- renderGraph3d({
+#'     graph3d(dat, type = "dot", width = "550px", height = "550px",
+#'             onclick = JS(onclick), tooltip = FALSE)
+#'   })
+#'
+#'   output[["pointClicked"]] <- renderPrint({
+#'     input[["point"]]
 #'   })
 #'
 #' }
