@@ -139,16 +139,85 @@ and the text along the axes}
 keep their aspect ratio; if \code{FALSE}, the axes are scaled such that they
 both have the same, maximum width}
 
-\item{elementId}{}
+\item{verticalRatio}{value between 0.1 and 1 which scales the vertical
+size of the graph; when \code{keepAspectRatio=FALSE} and
+\code{verticalRatio=1}, the graph will be a cube}
+
+\item{tooltip}{logical, whether to see the tooltips, or a JavaScript
+function to customize the tooltips; see the barplot example}
+
+\item{tooltipDelay}{a number, the delay time in ms for the tooltip to appear
+when the mouse cursor hovers over an x-y grid tile}
+
+\item{tooltipStyle}{a list of tooltip style properties; see the vis-graph3d
+documentation}
+
+\item{showLegend}{logical, whether to see the legend if the graph type
+supports it}
+
+\item{legendLabel}{a string, the label of the legend}
+
+\item{cameraPosition}{a list with three fields to set the initial rotation
+and position if the camera: \code{horizontal}, a value in radians,
+\code{vertical}, a value in radians between 0 and pi/2, and \code{distance},
+the distance between 0.71 and 5 from the camera to the center of the graph}
+
+\item{xCenter}{a string giving the horizontal center position of the graph
+as a percentage (like \code{"50\%"}) or in pixels (like \code{"100px"});
+default to \code{"55\%"}}
+
+\item{yCenter}{same as \code{xCenter} for the vertical center position of
+the graph; default to \code{"45\%"}}
+
+\item{xMin}{minimum value for the x-axis; if not set, the smallest value of
+\code{x} is used}
+
+\item{xMax}{maximum value for the x-axis; if not set, the largest value of
+\code{x} is used}
+
+\item{yMin}{minimum value for the y-axis; if not set, the smallest value of
+\code{y} is used}
+
+\item{yMax}{maximum value for the y-axis; if not set, the largest value of
+\code{y} is used}
+
+\item{zMin}{minimum value for the z-axis; if not set, the smallest value of
+\code{z} is used}
+
+\item{zMax}{maximum value for the z-axis; if not set, the largest value of
+\code{z} is used}
+
+\item{xStep}{a number, the step size for the grid on the x-axis}
+
+\item{yStep}{a number, the step size for the grid on the y-axis}
+
+\item{zStep}{a number, the step size for the grid on the z-axis}
+
+\item{showAnimationControls}{logical, only applicable when the graph
+contains an animation (i.e. \code{frame} is not \code{NULL}), whether to
+show the animation controls (buttons previous, start/stop, next, and a slider)}
+
+\item{animationInterval}{a number, the animation interval in milliseconds;
+default to 1000}
+
+\item{animationPreload}{logical; if \code{FALSE}, the animation frames are
+loaded as soon as they are requested; if \code{TRUE}, the animation frames
+are automatically loaded in the background}
+
+\item{frameLabel}{string, the label for the animation slider}
+
+\item{elementId}{an id for the widget}
 }
 \description{
 Generate an interactive 3D chart.
 }
 \details{
-See \url{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}.
+See the
+\href{https://visjs.github.io/vis-graph3d/docs/graph3d/index.html#Configuration_Options}{vis-graph3d}
+documentation.
 }
 \examples{
-# 3d histogram ####
+# 3d bar plot ####
 dat <- data.frame(x = c(1,1,2,2), y = c(1,2,1,2), z = c(1,2,3,4))
 graph3d(dat, type = "bar", zMin = 0)
 # change bar widths
