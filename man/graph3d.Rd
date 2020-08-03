@@ -94,7 +94,7 @@ see the vis-graph3d documentation for more information}
 \item{dataColor}{a string or a list; see the \code{type="line"} example and
 the vis-graph3d documentation}
 
-\item{xBarWidth, ybarWidth}{the widths of bars in x and y directions for
+\item{xBarWidth, yBarWidth}{the widths of bars in x and y directions for
 \code{type="bar"} and \code{type="bar-color"};
 by default, the width is equal to the smallest distance between the data points}
 

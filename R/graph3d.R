@@ -1,6 +1,15 @@
+#' Objects imported from other packages
+#' @description These objects are imported from other packages.
+#'   Follow the links to their documentation:
+#'   \code{\link[htmlwidgets:JS]{JS}},
+#'   \code{\link[htmlwidgets:saveWidget]{saveWidget}}.
 #' @importFrom htmlwidgets JS saveWidget
 #' @export JS saveWidget
+#' @name graph3d-imports
+#' @aliases JS saveWidget
+#' @docType import
 NULL
+
 
 dropNulls <- function(x){
   x[!vapply(x, is.null, FUN.VALUE = logical(1L))]
@@ -34,7 +43,7 @@ dropNulls <- function(x){
 #' see the vis-graph3d documentation for more information
 #' @param dataColor a string or a list; see the \code{type="line"} example and
 #' the vis-graph3d documentation
-#' @param xBarWidth,ybarWidth the widths of bars in x and y directions for
+#' @param xBarWidth,yBarWidth the widths of bars in x and y directions for
 #' \code{type="bar"} and \code{type="bar-color"};
 #' by default, the width is equal to the smallest distance between the data points
 #' @param xlab string, the label on the x-axis
