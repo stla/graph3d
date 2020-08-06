@@ -365,17 +365,22 @@ graph3d <- function(data = NULL,
 #' applications and interactive Rmd documents.
 #'
 #' @param outputId output variable to read from
-#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
+#' @param width,height dimensions, must be valid CSS units (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
-#'   string and have \code{'px'} appended.
-#' @param expr An expression that generates a graph3d
-#' @param env The environment in which to evaluate \code{expr}.
-#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
-#'   is useful if you want to save an expression in a variable.
+#'   string and have \code{'px'} appended
+#' @param expr an expression that generates a \code{\link{graph3d}} HTML widget
+#' @param env the environment in which to evaluate \code{expr}
+#' @param quoted logical, whether \code{expr} is a quoted expression (with
+#'   \code{quote()}); this is useful if you want to save an expression in a
+#'   variable
 #'
-#' @examples \donttest{# 'surfaceColors' example ####
+#' @examples if(interactive()) {
+#'
+#' # 'surfaceColors' example ####
+#'
 #' library(shiny)
 #' library(viridisLite)
+#' library(graph3d)
 #'
 #' x <- y <- seq(-10, 10, length.out = 100)
 #' dat <- expand.grid(x = x, y = y)
@@ -421,11 +426,15 @@ graph3d <- function(data = NULL,
 #' }
 #'
 #' shinyApp(ui, server)
-#' # ------------------------------------------------------------
+#'
 #' }
 #'
-#' \donttest{# 'onclick' example ####
+#' if(interactive()) {
+#'
+#' # 'onclick' example ####
+#'
 #' library(shiny)
+#' library(graph3d)
 #'
 #' dat <- data.frame(x = rnorm(30), y = rnorm(30), z = rnorm(30))
 #'
@@ -464,10 +473,12 @@ graph3d <- function(data = NULL,
 #' }
 #'
 #' shinyApp(ui, server)
+#'
 #' }
 #'
 #' @name graph3d-shiny
 #'
+#' @importFrom htmlwidgets shinyWidgetOutput shinyRenderWidget
 #' @export
 graph3dOutput <- function(outputId, width = '100%', height = '400px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'graph3d', width, height,

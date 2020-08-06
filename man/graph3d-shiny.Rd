@@ -13,25 +13,30 @@ renderGraph3d(expr, env = parent.frame(), quoted = FALSE)
 \arguments{
 \item{outputId}{output variable to read from}
 
-\item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
+\item{width, height}{dimensions, must be valid CSS units (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
-string and have \code{'px'} appended.}
+string and have \code{'px'} appended}
 
-\item{expr}{An expression that generates a graph3d}
+\item{expr}{an expression that generates a \code{\link{graph3d}} HTML widget}
 
-\item{env}{The environment in which to evaluate \code{expr}.}
+\item{env}{the environment in which to evaluate \code{expr}}
 
-\item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
-is useful if you want to save an expression in a variable.}
+\item{quoted}{logical, whether \code{expr} is a quoted expression (with
+\code{quote()}); this is useful if you want to save an expression in a
+variable}
 }
 \description{
 Output and render functions for using graph3d within Shiny
 applications and interactive Rmd documents.
 }
 \examples{
-\donttest{# 'surfaceColors' example ####
+if(interactive()) {
+
+# 'surfaceColors' example ####
+
 library(shiny)
 library(viridisLite)
+library(graph3d)
 
 x <- y <- seq(-10, 10, length.out = 100)
 dat <- expand.grid(x = x, y = y)
@@ -77,11 +82,15 @@ server <- function(input, output, session){
 }
 
 shinyApp(ui, server)
-# ------------------------------------------------------------
+
 }
 
-\donttest{# 'onclick' example ####
+if(interactive()) {
+
+# 'onclick' example ####
+
 library(shiny)
+library(graph3d)
 
 dat <- data.frame(x = rnorm(30), y = rnorm(30), z = rnorm(30))
 
@@ -120,6 +129,7 @@ server <- function(input, output, session){
 }
 
 shinyApp(ui, server)
+
 }
 
 }
