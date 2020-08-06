@@ -1,7 +1,7 @@
 The 'graph3d' package as a whole is distributed under GPL-3 (GNU GENERAL PUBLIC
 LICENSE version 3).
 
-The graph3d package includes the JavaScript library 'vis-graph3d'
+It includes the JavaScript library 'vis-graph3d'
 (https://github.com/visjs/vis-graph3d).
 A full copy of the license agreement used by 'vis-graph3d' is included below.
 
