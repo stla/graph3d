@@ -3,3 +3,4 @@
 ^inst/essais$
 ^inst/graph3d\.gif$
 
+^cran-comments\.md$
