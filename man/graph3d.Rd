@@ -32,6 +32,7 @@ graph3d(
   showYAxis = TRUE,
   showZAxis = TRUE,
   axisColor = NULL,
+  axisFontSize = 30,
   gridColor = NULL,
   keepAspectRatio = TRUE,
   verticalRatio = 0.5,
@@ -136,6 +137,8 @@ x-y surface}
 
 \item{axisColor}{a HTML color given as a string, the color of the axis lines
 and the text along the axes}
+
+\item{axisFontSize}{a positive number, the font size of the axes labels}
 
 \item{gridColor}{a HTML color given as a string, the color of the grid lines}
 

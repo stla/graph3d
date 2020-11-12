@@ -1,3 +1,7 @@
+## Release summary
+
+Just added one option.
+
 ## Test environments
 
 * ubuntu 18.04, R 3.6.3
@@ -5,6 +9,4 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* This is a new release.
+OK

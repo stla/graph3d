@@ -70,6 +70,7 @@ dropNulls <- function(x){
 #' @param showZAxis logical; if \code{TRUE}, z-axis and z-axis labels are drawn
 #' @param axisColor a HTML color given as a string, the color of the axis lines
 #' and the text along the axes
+#' @param axisFontSize a positive number, the font size of the axes labels
 #' @param gridColor a HTML color given as a string, the color of the grid lines
 #' @param keepAspectRatio logical; if \code{TRUE}, the x-axis and the y-axis
 #' keep their aspect ratio; if \code{FALSE}, the axes are scaled such that they
@@ -205,7 +206,7 @@ graph3d <- function(data = NULL,
                     backgroundColor = NULL,
                     showPerspective = TRUE, showGrid = TRUE, showShadow = FALSE,
                     showXAxis = TRUE, showYAxis = TRUE, showZAxis = TRUE,
-                    axisColor = NULL, gridColor = NULL,
+                    axisColor = NULL, axisFontSize = 30, gridColor = NULL,
                     keepAspectRatio = TRUE, verticalRatio = 0.5,
                     tooltip = TRUE, tooltipDelay = NULL, tooltipStyle = NULL,
                     showLegend = TRUE, legendLabel = NULL,
@@ -306,6 +307,7 @@ graph3d <- function(data = NULL,
       showYAxis = showYAxis,
       showZAxis = showZAxis,
       axisColor = axisColor,
+      axisFontSize = axisFontSize,
       gridColor = gridColor,
       keepAspectRatio = keepAspectRatio,
       verticalRatio = verticalRatio,

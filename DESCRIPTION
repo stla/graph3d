@@ -1,8 +1,8 @@
 Package: graph3d
 Type: Package
 Title: A Wrapper of the JavaScript Library 'vis-graph3d'
-Version: 0.1.0
-Date: 2020-08-06
+Version: 0.2.0
+Date: 2020-11-12
 Authors@R: c(
   person("Stéphane", "Laurent", email = "laurent_step@outlook.fr",
     role = c("aut", "cre"), comment = "R interface"),
@@ -10,7 +10,7 @@ Authors@R: c(
   person("vis.js contributors", role = c("aut", "cph")))
 Maintainer: Stéphane Laurent <laurent_step@outlook.fr>
 Description: Create interactive visualization charts to draw data in three dimensional graphs. The graphs can be included in Shiny apps and R markdown documents, or viewed from the R console and 'RStudio' Viewer. Based on the 'vis.js' Graph3d module and the 'htmlwidgets' R package.
-License: GPL-3 | file LICENSE
+License: GPL-3
 Imports: htmlwidgets, lazyeval
 Suggests: shiny, viridisLite
 Encoding: UTF-8
